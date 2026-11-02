@@ -1,0 +1,84 @@
+<?php
+$success_msg = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $team_name   = htmlspecialchars($_POST['team_name']);
+    $leader_name = htmlspecialchars($_POST['leader_name']);
+    $game_name   = htmlspecialchars($_POST['game_name']);
+    $phone       = htmlspecialchars($_POST['phone']);
+
+    $success_msg = "Success! Team '$team_name' has been registered for $game_name. Confirmation sent to $phone.";
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Registration - GameZone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">GAMEZONE</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tournaments.html">Tournaments</a>
+            <a href="register.html" class="active">Register</a>
+            <a href="leaderboard.html">Leaderboard</a>
+            <a href="contact.html">Rules & Support</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="form-box">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #ff4655;">Tournament Registration Form</h2>
+
+            <?php if (!empty($success_msg)): ?>
+                <div style="background: #1b4332; border: 1px solid #2d6a4f; color: #d8f3dc; padding: 12px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                    <?php echo $success_msg; ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="register.php" method="POST">
+                <div class="form-group">
+                    <label>Team Name:</label>
+                    <input type="text" name="team_name" placeholder="e.g. Soul Hunters" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Team Captain Name:</label>
+                    <input type="text" name="leader_name" placeholder="Enter captain's full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Tournament:</label>
+                    <select name="game_name" required>
+                        <option value="">-- Choose a Game --</option>
+                        <option value="Free Fire MAX">Free Fire MAX</option>
+                        <option value="BGMI">BGMI</option>
+                        <option value="Valorant">Valorant</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Captain's Mobile / WhatsApp Number:</label>
+                    <input type="tel" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Player In-Game UIDs:</label>
+                    <textarea name="player_uids" rows="3" placeholder="Player 1 UID, Player 2 UID, Player 3 UID, Player 4 UID" required></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Complete Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GameZone E-Sports Hub. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
